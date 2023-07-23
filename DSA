@@ -105,26 +105,33 @@ public class CountSingulars {
 
 
 //JAVA SUBARRAY
-public class SubarrayExample {
-    public static void printSubarrays(int[] arr) {
-        int n = arr.length;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
 
-        // Generate all possible subarrays
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                // Print the subarray from index i to j
-                for (int k = i; k <= j; k++) {
-                    System.out.print(arr[k] + " ");
-                }
-                System.out.println();
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+    int n=sc.nextInt();
+    int[] array1= new int[n];
+    for(int i=0;i<n;i++){
+        array1[i]=sc.nextInt();
+    }
+    int count=0;
+    for(int j=0;j<n;j++){
+        int sum=0;
+        for(int k=j;k<n;k++){
+            sum=array1[k]+sum;
+            if(sum<0){
+                count++;
             }
         }
     }
-
-    public static void main(String[] args) {
-        int[] arr = {1, 2, 3};
-        System.out.println("Subarrays:");
-        printSubarrays(arr);
+    System.out.println(count);
     }
 }
 
@@ -202,46 +209,41 @@ public class StackExample {
 }
 
 //9.JAVA DEQUEUE
-import java.util.Deque;
-import java.util.LinkedList;
-
-public class DequeueExample {
+public class test {
     public static void main(String[] args) {
-        Deque<Integer> dequeue = new LinkedList<>();
-
-        // Adding elements to the front of the dequeue
-        dequeue.addFirst(5);
-        dequeue.addFirst(10);
-        dequeue.addFirst(15);
-
-        // Adding elements to the end of the dequeue
-        dequeue.addLast(20);
-        dequeue.addLast(25);
-        dequeue.addLast(30);
-
-        // Removing elements from the front of the dequeue
-        int removedFromFront = dequeue.removeFirst();
-        System.out.println("Removed from front: " + removedFromFront);
-
-        // Removing elements from the end of the dequeue
-        int removedFromEnd = dequeue.removeLast();
-        System.out.println("Removed from end: " + removedFromEnd);
-
-        // Getting the front element of the dequeue
-        int frontElement = dequeue.getFirst();
-        System.out.println("Front element: " + frontElement);
-
-        // Getting the end element of the dequeue
-        int endElement = dequeue.getLast();
-        System.out.println("End element: " + endElement);
-
-        // Checking if the dequeue is empty
-        boolean isEmpty = dequeue.isEmpty();
-        System.out.println("Is dequeue empty? " + isEmpty);
-
-        // Getting the size of the dequeue
-        int size = dequeue.size();
-        System.out.println("Size of the dequeue: " + size);
+        HashMap<Integer, Integer> map = new HashMap<>();
+        Deque<Integer> deque          = new ArrayDeque<>();
+        
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int m = scan.nextInt();        
+        int max = map.size();
+        
+        for (int i = 0; i < n; i++) {
+            /* Remove old value (if necessary) */
+            if (i >= m) {
+                int old = deque.remove();
+                if (map.get(old) == 1) {
+                    map.remove(old);
+                } else {
+                    map.put(old, map.get(old) - 1);
+                }
+            }
+            /* Add new value */
+            int num = scan.nextInt();
+            deque.add(num);
+            map.merge(num, 1, Integer::sum);
+            
+            max = Math.max(max, map.size());
+						
+            /* If all integers are unique, break out of loop */
+            if (max == m) {
+                break;
+            }
+        }
+        
+        scan.close();
+        System.out.println(max);
     }
 }
 
