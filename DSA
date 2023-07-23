@@ -1,0 +1,457 @@
+
+//CUMULATIVE MULTIPLE OF AN ARRAY WITH EXCEPTION HANDLING
+
+
+public class CM{
+    public static int calculateCM(int[] arr) throws ArithmeticException {
+        if (arr.length == 0) {
+            throw new ArithmeticException("Array is empty.");
+        }
+
+        int cMul = 1;
+
+        for (int num : arr) {
+            if (num == 0) {
+                throw new ArithmeticException("Array contains zero.");
+            }
+
+            cMul*= num;
+        }
+
+        return cMul;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5};
+
+        try {
+            int result = calculateCM(arr);
+            System.out.println("Cumulative multiple: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+        }
+    }
+}
+
+//FIND THE MISSING NUMBERS IN AN ARRAy
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MissingNumbers {
+    public static List<Integer> findMissingNumbers(int[] arr) {
+        List<Integer> missingNumbers = new ArrayList<>();
+
+        // CREATE BOOLEAN ARRAY
+        boolean[] present = new boolean[arr.length + 1];
+
+        // PRESENCE OF NUMBERS IS MARKED
+        for (int num : arr) {
+            present[num] = true;
+        }
+
+        
+        for (int i = 1; i < present.length; i++) {
+            if (!present[i]) {
+                missingNumbers.add(i);
+            }
+        }
+
+        return missingNumbers;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 4, 6, 8};
+        List<Integer> missingNumbers = findMissingNumbers(arr);
+        System.out.println("Missing numbers: " + missingNumbers);
+    }
+}
+
+
+//COUNT OF SINGULARS IN AN ARRAY
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class CountSingulars {
+    public static int countSingulars(int[] arr) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+
+        
+        for (int num : arr) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+
+        int singularsCount = 0;
+
+        
+        for (int num : arr) {
+            if (countMap.get(num) == 1) {
+                singularsCount++;
+            }
+        }
+
+        return singularsCount;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 2, 3, 5, 6, 1, 4, 7};
+        int singularsCount = countSingulars(arr);
+        System.out.println("Count of singulars: " + singularsCount);
+    }
+}
+
+
+//JAVA SUBARRAY
+public class SubarrayExample {
+    public static void printSubarrays(int[] arr) {
+        int n = arr.length;
+
+        // Generate all possible subarrays
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                // Print the subarray from index i to j
+                for (int k = i; k <= j; k++) {
+                    System.out.print(arr[k] + " ");
+                }
+                System.out.println();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        System.out.println("Subarrays:");
+        printSubarrays(arr);
+    }
+}
+
+//7.LONGEST PALINDROMIC SUBSTRING
+
+public class LongestPalindrome {
+    public static String longestPalindrome(String s) {
+        if (s == null || s.length() < 2) {
+            return s;
+        }
+        
+        int start = 0;
+        int end = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandFromCenter(s, i, i);
+            int len2 = expandFromCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        
+        return s.substring(start, end + 1);
+    }
+    
+    private static int expandFromCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        
+        return right - left - 1;
+    }
+    
+    public static void main(String[] args) {
+        String input = "babad";
+        String longestPalindrome = longestPalindrome(input);
+        System.out.println(longestPalindrome);  // Output: "bab"
+    }
+}
+
+//8. JAVA STACK
+
+import java.util.Stack;
+
+public class StackExample {
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+
+        // Pushing elements onto the stack
+        stack.push(5);
+        stack.push(10);
+        stack.push(15);
+        stack.push(20);
+
+        // Popping 
+        int poppedElement = stack.pop();
+        System.out.println("Popped element: " + poppedElement);
+
+        // Peeking the top element of the stack
+        int topElement = stack.peek();
+        System.out.println("Top element: " + topElement);
+
+        // Checking if the stack is empty
+        boolean isEmpty = stack.isEmpty();
+        System.out.println("Is stack empty? " + isEmpty);
+
+        // Getting the size of the stack
+        int size = stack.size();
+        System.out.println("Size of the stack: " + size);
+    }
+}
+
+//9.JAVA DEQUEUE
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class DequeueExample {
+    public static void main(String[] args) {
+        Deque<Integer> dequeue = new LinkedList<>();
+
+        // Adding elements to the front of the dequeue
+        dequeue.addFirst(5);
+        dequeue.addFirst(10);
+        dequeue.addFirst(15);
+
+        // Adding elements to the end of the dequeue
+        dequeue.addLast(20);
+        dequeue.addLast(25);
+        dequeue.addLast(30);
+
+        // Removing elements from the front of the dequeue
+        int removedFromFront = dequeue.removeFirst();
+        System.out.println("Removed from front: " + removedFromFront);
+
+        // Removing elements from the end of the dequeue
+        int removedFromEnd = dequeue.removeLast();
+        System.out.println("Removed from end: " + removedFromEnd);
+
+        // Getting the front element of the dequeue
+        int frontElement = dequeue.getFirst();
+        System.out.println("Front element: " + frontElement);
+
+        // Getting the end element of the dequeue
+        int endElement = dequeue.getLast();
+        System.out.println("End element: " + endElement);
+
+        // Checking if the dequeue is empty
+        boolean isEmpty = dequeue.isEmpty();
+        System.out.println("Is dequeue empty? " + isEmpty);
+
+        // Getting the size of the dequeue
+        int size = dequeue.size();
+        System.out.println("Size of the dequeue: " + size);
+    }
+}
+
+//6.REMOVE DUPLICATES FROM LINKED LIST
+
+import java.util.HashSet;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    void removeDuplicates() {
+        if (head == null) {
+            return;
+        }
+
+        Node current = head;
+        Node previous = null;
+        HashSet<Integer> set = new HashSet<>();
+
+        while (current != null) {
+            int currentData = current.data;
+
+            if (set.contains(currentData)) {
+                previous.next = current.next;
+            } else {
+                set.add(currentData);
+                previous = current;
+            }
+
+            current = current.next;
+        }
+    }
+
+    void printList() {
+        Node current = head;
+
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList();
+        linkedList.head = new Node(10);
+        linkedList.head.next = new Node(20);
+        linkedList.head.next.next = new Node(10);
+        linkedList.head.next.next.next = new Node(30);
+        linkedList.head.next.next.next.next = new Node(20);
+
+        System.out.println("Original Linked List:");
+        linkedList.printList();
+
+        linkedList.removeDuplicates();
+
+        System.out.println("Linked List after removing duplicates:");
+        linkedList.printList();
+    }
+}
+
+//5.MERGE AND SORT THE ELEMENTS IN TWO LINKED LIST
+import java.util.*;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    LinkedList() {
+        this.head = null;
+    }
+
+    void insert(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+    }
+
+    void mergeSort() {
+        head = mergeSort(head);
+    }
+
+    private Node mergeSort(Node node) {
+        if (node == null || node.next == null) {
+            return node;
+        }
+
+        Node middle = getMiddle(node);
+        Node nextOfMiddle = middle.next;
+        middle.next = null;
+
+        Node left = mergeSort(node);
+        Node right = mergeSort(nextOfMiddle);
+
+        return merge(left, right);
+    }
+
+    private Node merge(Node left, Node right) {
+        Node result = null;
+
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+
+        if (left.data <= right.data) {
+            result = left;
+            result.next = merge(left.next, right);
+        } else {
+            result = right;
+            result.next = merge(left, right.next);
+        }
+
+        return result;
+    }
+
+    private Node getMiddle(Node node) {
+        if (node == null) {
+            return node;
+        }
+
+        Node slow = node;
+        Node fast = node.next;
+
+        while (fast != null) {
+            fast = fast.next;
+            if (fast != null) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+        }
+
+        return slow;
+    }
+
+    void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList();
+        linkedList.insert(5);
+        linkedList.insert(2);
+        linkedList.insert(8);
+        linkedList.insert(1);
+        linkedList.insert(7);
+        linkedList.insert(3);
+
+        System.out.println("Before sorting:");
+        linkedList.display();
+
+        linkedList.mergeSort();
+
+        System.out.println("After sorting:");
+        linkedList.display();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
